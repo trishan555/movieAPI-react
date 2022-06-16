@@ -5,14 +5,16 @@ import MovieCard from './components/MovieCard';
 const App = () => {
   const [movies, setMovies] = useState([])
 
-  const searchMovie = async() =>{
-    const response = await fetch(`${process.env.REACT_APP_API_URL}&s=spiderman`)
+  const [search, setSearch] = useState()
+
+  const searchMovie = async(title) =>{
+    const response = await fetch(`${process.env.REACT_APP_API_URL}&s=${title}`)
     const data = await response.json()
     setMovies(data.Search)
   }
 
   useEffect(() => {
-    searchMovie()
+    searchMovie('batman')
 
   }, [])
 
@@ -21,12 +23,12 @@ const App = () => {
       <div>
         <input
           placeholder='Search for movies'
-          value='Superman'
-          onChange={() => {}}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
       
         <button
-          onClick={() => {}}
+          onClick={() => searchMovie(search) }
         >Search</button>
       </div>
 
